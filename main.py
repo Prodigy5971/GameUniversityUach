@@ -1,34 +1,94 @@
-import io
-import sys, pygame
-from urllib.request import urlopen
+import pygame, random#,sys  
+from pygame.locals import *
+
+#ola
+
+size = width, height = 640, 640
+#640x640
+
+black = 0, 0, 0
+projectSize = 32
+
+map = [
+[0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0,0,0],
+
+[0,0,2,2,2,2,2,2,0,0,0,1,1,1,1,1,1,1,0,0],
+
+[1,1,2,0,0,0,0,2,0,0,0,1,1,1,1,1,1,1,0,0],
+
+[1,1,2,2,2,2,2,2,2,2,2,2,1,1,1,1,1,1,0,0],
+
+[1,1,1,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0],
+    
+[0,0,0,0,0,0,0,1,1,1,0,1,1,1,1,1,1,2,2,0],
+
+[0,2,2,2,2,2,2,2,1,1,0,0,1,1,1,1,1,0,2,0],
+
+[0,2,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,2,0],
+
+[0,2,0,0,0,0,0,0,2,2,2,2,2,2,2,2,2,2,2,0],
+
+[0,2,0,0,0,0,0,0,2,0,2,0,0,2,0,0,0,0,0,0],
+
+[0,2,2,2,2,2,2,2,2,0,2,0,0,2,0,1,1,1,1,1],
+
+[0,0,0,0,0,0,0,0,0,0,0,0,0,2,0,1,1,1,1,1],
+
+[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,2,1],
+
+[2,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,0],
+
+[2,0,2,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,0],
+
+[2,0,1,1,1,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0],
+
+[2,0,1,1,1,0,0,1,2,0,2,2,2,0,1,1,1,1,1,0],
+
+[0,0,0,0,0,0,0,0,2,0,2,0,2,0,1,1,1,1,1,0],
+
+[0,2,2,2,2,2,2,2,2,2,2,2,2,2,2,1,1,1,1,0],
+
+[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,0]
+]
+
+def initialSetup():
+    global screen, wall, pj, potion
+    screen = pygame.display.set_mode(size)
+    wall = pygame.image.load("Sprites//wall1.png")
+    pj = pygame.image.load("Sprites//Elegant_Sir.png")
+    potion = pygame.image.load("Sprites//potion.png")
+    pygame.display.set_caption('PAUGUS')
+    pygame.display.set_icon(wall)
+
+def mapping(map):
+    global wall
+    for cordinate_y, line in enumerate(map):
+        #print("y:", cordinate_y, "c:", line)
+        for cordinate_x, character in enumerate(line):
+            
+            print("x:", cordinate_x, "cha:", character)
+            if character == 0:
+                screen.blit(wall, (cordinate_x * projectSize, cordinate_y * projectSize))
+            if character == 1:
+                if random.randint(0, 1):
+                    screen.blit(potion, (cordinate_x * projectSize, cordinate_y * projectSize))
+                
+            if character == 2:
+                if random.randint(0, 1):
+                    screen.blit(pj, (cordinate_x * projectSize, cordinate_y * projectSize))
+
+                
+                
+ 
 
 pygame.init()
-
-size = width, height = 320, 240
-speed = [2, 2]
-black = 0, 0, 0
-
-screen = pygame.display.set_mode(size)
-
-image_url = "https://www.pygame.org/docs/_images/intro_ball.gif"
-
-image_str = urlopen(image_url).read()
-# create a file object (stream)
-image_file = io.BytesIO(image_str)
-
-ball = pygame.image.load()
-ballrect = ball.get_rect()
-
-while 1:
+initialSetup()
+mapping(map)
+loop = 1
+while loop:
+   
     for event in pygame.event.get():
-        if event.type == pygame.QUIT: sys.exit()
-
-    ballrect = ballrect.move(speed)
-    if ballrect.left < 0 or ballrect.right > width:
-        speed[0] = -speed[0]
-    if ballrect.top < 0 or ballrect.bottom > height:
-        speed[1] = -speed[1]
-
-    screen.fill(black)
-    screen.blit(ball, ballrect)
-    pygame.display.flip()
+        if event.type == pygame.QUIT:
+            loop = 0
+    pygame.display.update()
+pygame.quit()
