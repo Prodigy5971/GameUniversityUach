@@ -17,6 +17,8 @@ collitionWall = False
 collitionObstacle = False
 collitionPotion = False
 
+enemyDirection = '0'
+
 myPotions = 0
 
 
@@ -211,11 +213,10 @@ def playerInitPosition():
                 
 def player(x, y):
     global player_x, player_y, pjHitbox, collitionWall, collitionObstacle, collitionPotion, keyDirection
-    
     statePotion = False
     
-    for w in walls:       
-        collitionWall = pygame.Rect.colliderect(pjHitbox, w)
+    #for w in walls:       
+        #collitionWall = pygame.Rect.colliderect(pjHitbox, w)
 
     def direction(d):
         global map1
@@ -236,7 +237,38 @@ def player(x, y):
                 print(d)
                 return 'stop' 
                         
-                
+    def limits():
+        global player_x, player_y
+        
+        if player_x <= 0:
+            player_x += 1
+            return False
+            
+        elif player_y <= 0:
+            player_y += 1
+            return False
+            
+        elif player_x >= 19:
+            player_x -= 1
+            return False
+            
+        elif player_y >= 19:
+            player_y -= 1
+            return False
+
+        return True
+            
+
+    if(limits()):
+        print('pasa')
+        pass
+    else:
+        if limits() == 'x':
+            player_x -= 1
+        keyDirection = '0'
+        print(player_x, player_y)
+        return
+        
     if(direction(keyDirection) == 'stop'):
         keyDirection = '0'
         print('se para*')
@@ -277,8 +309,8 @@ def crash(id, key):
     y = 0
     for cordinate_y, line in enumerate(map1):
         for cordinate_x, character in enumerate(line):
-            if id == wallId:
-                pass
+            #if id == wallId:
+                #pass
                 
             if id == potionId and player_x == cordinate_x and player_y == cordinate_y:
                 if key == 'top':
