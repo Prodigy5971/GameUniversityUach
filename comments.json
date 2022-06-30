@@ -1,0 +1,8 @@
+leftCol = pygame.Rect(0, 0, 1, 20 * projectSize)
+    pygame.draw.rect(screen, (177, 20, 148), leftCol)
+    topCol = pygame.Rect(0, 0 * projectSize, 20 * projectSize, 1)
+    pygame.draw.rect(screen, (177, 20, 148), topCol)
+    rightCol = pygame.Rect(19.999 * projectSize, 0, 1, 20 * projectSize)
+    pygame.draw.rect(screen, (177, 20, 148), rightCol)
+    bottomCol = pygame.Rect(0,  19.999 * projectSize, 20 * projectSize, 1)
+    pygame.draw.rect(screen, (177, 20, 148), bottomCol)
